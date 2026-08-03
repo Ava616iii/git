@@ -13,8 +13,8 @@ Cloudflare Pages 部署目录。
 连接 GitHub 仓库后使用这些设置：
 
 - Framework preset: `None`
-- Build command: 留空
-- Build output directory: `/`
+- Build command: `exit 0`
+- Build output directory: `.`
 - Root directory: `/`
 
 部署成功后检查：
