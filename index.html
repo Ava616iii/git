@@ -1372,7 +1372,11 @@
 
       const footer = document.querySelector(".sidebar-footer");
       if (footer) {
-        const source = data.source === "cloudflare-worker-eastmoney" ? "实时接口" : "静态兜底";
+        const source = data.source === "cloudflare-worker-eastmoney"
+          ? "实时接口"
+          : data.source === "github-actions-eastmoney"
+            ? "自动刷新"
+            : "静态兜底";
         footer.innerHTML = `今日已处理 ${escapeHtml(data.overview?.news || "0")} 条异动<br />最后同步 ${escapeHtml(data.updatedAt || "--")} · ${source}<br />提醒通道：站内、微信、邮件`;
       }
     }
