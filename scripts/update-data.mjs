@@ -7,9 +7,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUTPUT = path.join(ROOT, "data.json");
 
 const STATIC_INFLUENCERS = [
-  { avatar: "M", name: "马斯克", handle: "@elonmusk", url: "https://x.com/elonmusk", summary: "关注科技、AI 和新能源主线。"},
-  { avatar: "N", name: "NVIDIA", handle: "@nvidia", url: "https://x.com/nvidia", summary: "关注算力、芯片和 AI 产业链。"},
-  { avatar: "S", name: "sszcw", handle: "@sszcw", url: "https://x.com/sszcw", summary: "预留关键账号入口与关键词提醒位。"}
+  { avatar: "马", name: "马斯克", handle: "@elonmusk", url: "https://x.com/elonmusk", summary: "最新动态：谈及机器人出租车扩张节奏，已翻译并提取关键词。" },
+  { avatar: "黄", name: "黄仁勋 / NVIDIA", handle: "@nvidia", url: "https://x.com/nvidia", summary: "最新动态：强调端侧 AI 和推理成本下降，关联 AI PC、芯片链。" },
+  { avatar: "S", name: "sszcw", handle: "@sszcw", url: "https://x.com/sszcw", summary: "盘中观点触发关键词提醒后进入复核队列。" },
+  { avatar: "V", name: "Valen", handle: "@Valen9223", url: "https://x.com/Valen9223", summary: "重点监控盘中观点、主题发酵和个股提及。" },
+  { avatar: "Y", name: "iYXwivACYC88764", handle: "@iYXwivACYC88764", url: "https://x.com/iYXwivACYC88764", summary: "发现关键词后进入待复核队列。" },
+  { avatar: "P", name: "PandaTouZi", handle: "@PandaTouZi", url: "https://x.com/PandaTouZi", summary: "关注中概、A股映射和跨市场异动。" },
+  { avatar: "B", name: "bbloveu7777", handle: "@bbloveu7777", url: "https://x.com/bbloveu7777", summary: "高频捕捉情绪变化和短线线索。" }
 ];
 
 async function main() {

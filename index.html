@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
@@ -214,8 +214,8 @@
       grid-template-columns: minmax(460px, 1.18fr) minmax(360px, .95fr);
       grid-template-areas:
         "funds xueqiu"
-        "influencer monitor"
-        "influencer alerts"
+        "news influencer"
+        "news alerts"
         "news stocks"
         "news sectors";
       gap: 16px;
@@ -233,10 +233,9 @@
     }
 
     #newsPanel { grid-area: news; }
-    #fundPanel { grid-area: funds; }
+#fundPanel { grid-area: funds; }
     #stockPanel { grid-area: stocks; }
     #sectorPanel { grid-area: sectors; }
-    #monitorPanel { grid-area: monitor; }
     #xueqiuPanel { grid-area: xueqiu; }
     #influencerPanel { grid-area: influencer; }
     #alertPanel { grid-area: alerts; }
@@ -251,7 +250,6 @@
 
     #fundPanel,
     #xueqiuPanel,
-    #monitorPanel,
     #influencerPanel,
     #alertPanel {
       height: 100%;
@@ -883,9 +881,8 @@
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
           "funds funds"
-          "xueqiu monitor"
+          "xueqiu influencer"
           "alerts alerts"
-          "influencer influencer"
           "news news"
           "stocks sectors";
       }
@@ -899,7 +896,6 @@
         grid-template-areas:
           "funds"
           "xueqiu"
-          "monitor"
           "influencer"
           "alerts"
           "news"
@@ -926,7 +922,6 @@
         <button class="active" data-target="fundPanel"><span>↕</span><span>板块资金</span><span class="badge">16</span></button>
         <button data-target="xueqiuPanel"><span>雪</span><span>雪球自选</span><span class="badge">3</span></button>
         <button data-target="influencerPanel"><span>★</span><span>大V追踪</span><span class="badge">7</span></button>
-        <button data-target="monitorPanel"><span>⌕</span><span>自定义监控</span><span class="badge">6</span></button>
         <button data-target="alertPanel"><span>!</span><span>提醒设置</span><span class="badge">5</span></button>
         <button data-target="newsPanel"><span>◆</span><span>每日快讯</span><span class="badge">42</span></button>
         <button data-target="stockPanel"><span>▣</span><span>个股提及</span><span class="badge">18</span></button>
@@ -1076,27 +1071,6 @@
             </div>
             <div class="rank-list" id="sectorRank"></div>
           </article>
-
-          <article class="panel" id="monitorPanel">
-            <div class="panel-head">
-              <h2 class="panel-title">自定义监控</h2>
-              <span class="panel-sub">全文异动关键词</span>
-            </div>
-            <div class="monitor-body">
-              <div class="keyword-box">
-                <input id="keywordInput" type="text" value="机器人 出海 高送转" aria-label="监控关键词" />
-                <button class="primary" id="saveKeywords">保存</button>
-              </div>
-              <div class="keyword-tags">
-                <span class="tag">马斯克</span>
-                <span class="tag">英伟达供应链</span>
-                <span class="tag">并购重组</span>
-                <span class="tag">低空经济</span>
-                <span class="tag">AI眼镜</span>
-              </div>
-            </div>
-          </article>
-
           <article class="panel" id="xueqiuPanel">
             <div class="panel-head">
               <h2 class="panel-title">雪球自选追踪</h2>
@@ -1462,11 +1436,6 @@
         filterNews(tabButton.dataset.filter);
       }
 
-      if (event.target.id === "saveKeywords") {
-        const value = document.getElementById("keywordInput").value.trim();
-        showToast(value ? `已保存监控关键词：${value}` : "请输入至少一个监控关键词");
-      }
-
       if (event.target.closest("#xueqiuWatchList")) {
         openDetail("南京路彼岸自选");
       }
@@ -1489,3 +1458,4 @@
   </script>
 </body>
 </html>
+
