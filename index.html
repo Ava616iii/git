@@ -215,6 +215,8 @@
       grid-template-areas:
         "funds xueqiu"
         "news influencer"
+        "news reasons"
+        "news refresh"
         "news alerts"
         "news stocks"
         "news sectors";
@@ -238,6 +240,8 @@
     #sectorPanel { grid-area: sectors; }
     #xueqiuPanel { grid-area: xueqiu; }
     #influencerPanel { grid-area: influencer; }
+    #reasonPanel { grid-area: reasons; }
+    #refreshPanel { grid-area: refresh; }
     #alertPanel { grid-area: alerts; }
 
     .panel {
@@ -251,6 +255,8 @@
     #fundPanel,
     #xueqiuPanel,
     #influencerPanel,
+    #reasonPanel,
+    #refreshPanel,
     #alertPanel {
       height: 100%;
     }
@@ -631,6 +637,64 @@
       line-height: 1.45;
     }
 
+    .reason-list,
+    .refresh-body {
+      padding: 12px 14px 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .reason-row,
+    .refresh-row {
+      display: grid;
+      gap: 6px;
+      padding: 10px;
+      border: 1px solid #e8eef7;
+      border-radius: 7px;
+      background: var(--soft);
+    }
+
+    .reason-row strong,
+    .refresh-row strong {
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .reason-row span,
+    .refresh-row span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .reason-label {
+      width: fit-content;
+      border-radius: 5px;
+      background: #eef4ff;
+      color: #175cd3;
+      padding: 3px 6px;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    .refresh-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+
+    .refresh-row strong,
+    .refresh-row span {
+      min-width: 0;
+    }
+
+    .refresh-value {
+      justify-self: end;
+      color: var(--text);
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
     .xueqiu-body {
       padding: 14px;
       display: grid;
@@ -882,6 +946,7 @@
         grid-template-areas:
           "funds funds"
           "xueqiu influencer"
+          "reasons refresh"
           "alerts alerts"
           "news news"
           "stocks sectors";
@@ -897,6 +962,8 @@
           "funds"
           "xueqiu"
           "influencer"
+          "reasons"
+          "refresh"
           "alerts"
           "news"
           "stocks"
@@ -922,6 +989,8 @@
         <button class="active" data-target="fundPanel"><span>↕</span><span>板块资金</span><span class="badge">16</span></button>
         <button data-target="xueqiuPanel"><span>雪</span><span>雪球自选</span><span class="badge">3</span></button>
         <button data-target="influencerPanel"><span>★</span><span>大V追踪</span><span class="badge">7</span></button>
+        <button data-target="reasonPanel"><span>?</span><span>异动原因</span><span class="badge">4</span></button>
+        <button data-target="refreshPanel"><span>↻</span><span>刷新状态</span><span class="badge">云</span></button>
         <button data-target="alertPanel"><span>!</span><span>提醒设置</span><span class="badge">5</span></button>
         <button data-target="newsPanel"><span>◆</span><span>每日快讯</span><span class="badge">42</span></button>
         <button data-target="stockPanel"><span>▣</span><span>个股提及</span><span class="badge">18</span></button>
@@ -1136,6 +1205,41 @@
             </div>
           </article>
 
+          <article class="panel" id="reasonPanel">
+            <div class="panel-head">
+              <h2 class="panel-title">异动原因</h2>
+              <span class="panel-sub">资金、个股、消息合并判断</span>
+            </div>
+            <div class="reason-list" id="reasonList">
+              <div class="reason-row">
+                <span class="reason-label">资金驱动</span>
+                <strong>等待实时数据同步</strong>
+                <span>页面读取 data.json 后会自动生成当前主线原因。</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel" id="refreshPanel">
+            <div class="panel-head">
+              <h2 class="panel-title">刷新状态</h2>
+              <span class="panel-sub" id="refreshPanelSub">等待读取</span>
+            </div>
+            <div class="refresh-body">
+              <div class="refresh-row">
+                <div><strong>云端数据</strong><span>GitHub Actions 每 5 分钟刷新一次</span></div>
+                <span class="refresh-value" id="cloudRefreshValue">--</span>
+              </div>
+              <div class="refresh-row">
+                <div><strong>手机页面</strong><span>打开页面后每 60 秒重新读取</span></div>
+                <span class="refresh-value" id="pageRefreshValue">--</span>
+              </div>
+              <div class="refresh-row">
+                <div><strong>读取状态</strong><span id="refreshStatusHint">尚未读取数据</span></div>
+                <span class="refresh-value" id="refreshStatusValue">--</span>
+              </div>
+            </div>
+          </article>
+
           <article class="panel" id="alertPanel">
             <div class="panel-head">
               <h2 class="panel-title">提醒设置</h2>
@@ -1181,6 +1285,11 @@
   <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
   <script>
+    const PAGE_REFRESH_MS = 60000;
+    let lastDataLoadAt = null;
+    let lastDataLoadOk = false;
+    let nextDataLoadAt = null;
+
     let dashboardData = {
       updatedAt: "14:36:22",
       status: { mode: "A股盘中监控", aShareAlerts: 42, overseasAlerts: 9, alertEnabled: true },
@@ -1330,6 +1439,83 @@
       `).join("");
     }
 
+    function sourceLabel(source) {
+      return source === "cloudflare-worker-eastmoney"
+        ? "实时接口"
+        : source === "github-actions-eastmoney"
+          ? "自动刷新"
+          : "静态兜底";
+    }
+
+    function renderReasons(data) {
+      const box = document.getElementById("reasonList");
+      if (!box) return;
+
+      const topIn = data.funds?.in?.[0];
+      const topOut = data.funds?.out?.[0];
+      const topStock = data.stocks?.[0];
+      const topSector = data.sectors?.[0];
+      const topNews = data.news?.[0];
+      const reasons = [
+        {
+          label: "资金驱动",
+          title: topIn ? `${topIn.name}净流入居前` : "等待资金榜单",
+          summary: topIn ? `主力资金约 ${topIn.value}，是当前最强流入方向。` : "资金数据同步后显示。"
+        },
+        {
+          label: "个股带动",
+          title: topStock ? `${topStock[0]}排名靠前` : "等待个股榜单",
+          summary: topStock ? `榜单热度 ${topStock[1]} 次，当前涨跌幅 ${topStock[2]}。` : "个股数据同步后显示。"
+        },
+        {
+          label: "板块共振",
+          title: topSector ? `${topSector[0]}热度领先` : "等待板块统计",
+          summary: topSector ? `板块强度 ${topSector[1]}，趋势变化 ${topSector[2]}。` : "板块数据同步后显示。"
+        },
+        {
+          label: "风险侧",
+          title: topOut ? `${topOut.name}资金流出靠前` : topNews?.title || "等待消息线索",
+          summary: topOut ? `主力资金约 ${topOut.value}，需要和流入主线对照观察。` : topNews?.summary || "消息线索同步后显示。"
+        }
+      ];
+
+      box.innerHTML = reasons.map(item => `
+        <div class="reason-row">
+          <span class="reason-label">${escapeHtml(item.label)}</span>
+          <strong>${escapeHtml(item.title)}</strong>
+          <span>${escapeHtml(item.summary)}</span>
+        </div>
+      `).join("");
+    }
+
+    function formatLocalTime(date) {
+      if (!date) return "--";
+      return new Intl.DateTimeFormat("zh-CN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }).format(date);
+    }
+
+    function renderRefreshStatus(data) {
+      const sub = document.getElementById("refreshPanelSub");
+      const cloud = document.getElementById("cloudRefreshValue");
+      const page = document.getElementById("pageRefreshValue");
+      const status = document.getElementById("refreshStatusValue");
+      const hint = document.getElementById("refreshStatusHint");
+      if (!sub || !cloud || !page || !status || !hint) return;
+
+      const secondsLeft = nextDataLoadAt ? Math.max(0, Math.ceil((nextDataLoadAt - Date.now()) / 1000)) : null;
+      sub.textContent = lastDataLoadOk ? "连接正常" : "等待/重试中";
+      cloud.textContent = data.updatedAt ? `${data.updatedAt} · ${sourceLabel(data.source)}` : "--";
+      page.textContent = secondsLeft === null ? "60秒轮询" : `${secondsLeft}秒后`;
+      status.textContent = lastDataLoadOk ? "正常" : "重试";
+      hint.textContent = lastDataLoadAt
+        ? `最近读取 ${formatLocalTime(lastDataLoadAt)}，云端每 5 分钟刷新一次`
+        : "打开页面后会自动读取数据";
+    }
+
     function renderSummary(data) {
       const metricValues = document.querySelectorAll(".metric strong");
       const values = [data.overview?.news, data.overview?.stocks, data.overview?.sectors, data.overview?.alerts];
@@ -1346,11 +1532,7 @@
 
       const footer = document.querySelector(".sidebar-footer");
       if (footer) {
-        const source = data.source === "cloudflare-worker-eastmoney"
-          ? "实时接口"
-          : data.source === "github-actions-eastmoney"
-            ? "自动刷新"
-            : "静态兜底";
+        const source = sourceLabel(data.source);
         footer.innerHTML = `今日已处理 ${escapeHtml(data.overview?.news || "0")} 条异动<br />最后同步 ${escapeHtml(data.updatedAt || "--")} · ${source}<br />提醒通道：站内、微信、邮件`;
       }
     }
@@ -1364,6 +1546,8 @@
       renderRank("sectorRank", dashboardData.sectors);
       renderXueqiu(dashboardData.xueqiu);
       renderInfluencers(dashboardData.influencers);
+      renderReasons(dashboardData);
+      renderRefreshStatus(dashboardData);
       filterNews(document.querySelector("#newsTabs button.active")?.dataset.filter || "全部");
     }
 
@@ -1401,21 +1585,31 @@
       try {
         const liveResponse = await fetch(`api/data?v=${Date.now()}`, { cache: "no-store" });
         if (liveResponse.ok) {
+          lastDataLoadAt = new Date();
+          lastDataLoadOk = true;
+          nextDataLoadAt = Date.now() + PAGE_REFRESH_MS;
           renderDashboard(await liveResponse.json());
           return;
         }
 
         const staticResponse = await fetch(`data.json?v=${Date.now()}`, { cache: "no-store" });
         if (!staticResponse.ok) throw new Error(`HTTP ${staticResponse.status}`);
+        lastDataLoadAt = new Date();
+        lastDataLoadOk = true;
+        nextDataLoadAt = Date.now() + PAGE_REFRESH_MS;
         renderDashboard(await staticResponse.json());
       } catch (error) {
+        lastDataLoadAt = new Date();
+        lastDataLoadOk = false;
+        nextDataLoadAt = Date.now() + PAGE_REFRESH_MS;
         renderDashboard(dashboardData);
         console.warn("实时数据加载失败，使用页面内置数据。", error);
       }
     }
 
     loadData();
-    setInterval(loadData, 60000);
+    setInterval(loadData, PAGE_REFRESH_MS);
+    setInterval(() => renderRefreshStatus(dashboardData), 1000);
 
     document.addEventListener("click", event => {
       const button = event.target.closest(".name-button");
