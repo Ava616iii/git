@@ -211,17 +211,16 @@
 
     .grid {
       display: grid;
-      grid-template-columns: minmax(460px, 1.18fr) minmax(360px, .95fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-template-areas:
-        "funds xueqiu"
-        "news influencer"
-        "news reasons"
-        "news refresh"
-        "news alerts"
+        "funds funds"
         "news stocks"
-        "news sectors";
+        "news sectors"
+        "xueqiu influencer"
+        "reasons alerts"
+        "refresh alerts";
       gap: 16px;
-      align-items: start;
+      align-items: stretch;
     }
 
     .stack {
@@ -945,11 +944,11 @@
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
           "funds funds"
+          "news news"
+          "stocks sectors"
           "xueqiu influencer"
           "reasons refresh"
-          "alerts alerts"
-          "news news"
-          "stocks sectors";
+          "alerts alerts";
       }
     }
 
@@ -1149,14 +1148,14 @@
               <div class="watch-user">
                 <div>
                   <strong>南京路彼岸</strong>
-                  <span>实时追踪雪球自选股变动、加入/移除动作和自选标的异动提醒。</span>
+                  <span>雪球接口已接入 worker；当前缺少雪球登录态，暂不拉取自选列表。</span>
                 </div>
                 <a class="profile-link" href="https://xueqiu.com/u/7273692735" target="_blank" rel="noopener noreferrer">打开雪球</a>
               </div>
               <div class="watch-list" id="xueqiuWatchList">
-                <div class="watch-row"><div><strong>等待接口同步</strong><span>接入雪球登录态后自动展示具体自选标的、涨跌幅和最近加入时间。</span></div><span class="watch-status">实时追踪中</span></div>
-                <div class="watch-row"><div><strong>自选变动提醒</strong><span>发现新增标的、删除标的或高频查看标的时推送到提醒中心。</span></div><span class="watch-status">1分钟内</span></div>
-                <div class="watch-row"><div><strong>关联资金校验</strong><span>与板块资金流入较大标的交叉匹配，优先展示共振标的。</span></div><span class="watch-status">待匹配</span></div>
+                <div class="watch-row"><div><strong>雪球接口预留</strong><span>当前 GitHub Pages 版本只读取 data.json，雪球自选需要后端接口支持。</span></div><span class="watch-status">待接入</span></div>
+                <div class="watch-row"><div><strong>等待登录态</strong><span>配置后端服务和 XUEQIU_COOKIE 后，才能读取雪球自选列表并展示标的涨跌幅。</span></div><span class="watch-status">待配置</span></div>
+                <div class="watch-row"><div><strong>静态页面模式</strong><span>浏览器每 60 秒读取 data.json，不直接访问雪球，避免 CORS 和登录态泄露。</span></div><span class="watch-status">运行中</span></div>
               </div>
             </div>
           </article>
@@ -1444,6 +1443,8 @@
         ? "实时接口"
         : source === "github-actions-eastmoney"
           ? "自动刷新"
+          : source === "github-actions-eastmoney-error"
+            ? "接口失败"
           : "静态兜底";
     }
 
@@ -1507,12 +1508,15 @@
       if (!sub || !cloud || !page || !status || !hint) return;
 
       const secondsLeft = nextDataLoadAt ? Math.max(0, Math.ceil((nextDataLoadAt - Date.now()) / 1000)) : null;
-      sub.textContent = lastDataLoadOk ? "连接正常" : "等待/重试中";
+      const sourceFailed = data.source === "github-actions-eastmoney-error";
+      sub.textContent = sourceFailed ? "数据源异常" : lastDataLoadOk ? "连接正常" : "等待/重试中";
       cloud.textContent = data.updatedAt ? `${data.updatedAt} · ${sourceLabel(data.source)}` : "--";
       page.textContent = secondsLeft === null ? "60秒轮询" : `${secondsLeft}秒后`;
-      status.textContent = lastDataLoadOk ? "正常" : "重试";
+      status.textContent = sourceFailed ? "接口失败" : lastDataLoadOk ? "正常" : "重试";
       hint.textContent = lastDataLoadAt
-        ? `最近读取 ${formatLocalTime(lastDataLoadAt)}，云端每 5 分钟刷新一次`
+        ? sourceFailed
+          ? `最近读取 ${formatLocalTime(lastDataLoadAt)}，数据接口失败，当前显示上一次可用数据`
+          : `最近读取 ${formatLocalTime(lastDataLoadAt)}，云端每 5 分钟刷新一次`
         : "打开页面后会自动读取数据";
     }
 
@@ -1583,15 +1587,6 @@
 
     async function loadData() {
       try {
-        const liveResponse = await fetch(`api/data?v=${Date.now()}`, { cache: "no-store" });
-        if (liveResponse.ok) {
-          lastDataLoadAt = new Date();
-          lastDataLoadOk = true;
-          nextDataLoadAt = Date.now() + PAGE_REFRESH_MS;
-          renderDashboard(await liveResponse.json());
-          return;
-        }
-
         const staticResponse = await fetch(`data.json?v=${Date.now()}`, { cache: "no-store" });
         if (!staticResponse.ok) throw new Error(`HTTP ${staticResponse.status}`);
         lastDataLoadAt = new Date();
