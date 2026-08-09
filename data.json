@@ -1,6 +1,6 @@
 {
   "source": "github-actions-eastmoney",
-  "updatedAt": "23:44:24",
+  "updatedAt": "03:21:23",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -15,7 +15,7 @@
   },
   "news": [
     {
-      "time": "23:44",
+      "time": "03:21",
       "source": "A股",
       "title": "电子资金净流入居前",
       "summary": "电子当前主力净流入约 +267.03亿，页面数据来自东方财富公开行情接口。",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "time": "23:44",
+      "time": "03:21",
       "source": "A股",
       "title": "光迅科技主力资金排名靠前",
       "summary": "光迅科技进入当前资金净流入靠前列表，涨跌幅 +10.00%。",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "time": "23:44",
+      "time": "03:21",
       "source": "A股",
       "title": "计算机资金净流出靠前",
       "summary": "计算机当前主力净流出约 -66.85亿，可结合个股和板块榜单观察。",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "time": "23:44",
+      "time": "03:21",
       "source": "海外",
       "title": "海外与大V位保留为后续扩展",
       "summary": "X、雪球和付费讯源需要授权或额外接口；当前自动刷新先覆盖 A 股公开数据。",
@@ -64,81 +64,49 @@
         "name": "电子",
         "width": 100,
         "value": "+267.03亿",
-        "leaders": [
-          "兆易创新 +20.00亿",
-          "生益科技 +19.18亿",
-          "胜宏科技 +15.91亿"
-        ]
+        "leaders": []
       },
       {
         "name": "元件",
         "width": 100,
         "value": "+124.31亿",
-        "leaders": [
-          "生益科技 +19.18亿",
-          "胜宏科技 +15.91亿",
-          "沪电股份 +9.16亿"
-        ]
+        "leaders": []
       },
       {
         "name": "印制电路板",
         "width": 100,
         "value": "+122.63亿",
-        "leaders": [
-          "生益科技 +19.18亿",
-          "胜宏科技 +15.91亿",
-          "沪电股份 +9.16亿"
-        ]
+        "leaders": []
       },
       {
         "name": "半导体",
         "width": 100,
         "value": "+108.20亿",
-        "leaders": [
-          "兆易创新 +20.00亿",
-          "N展芯 +9.71亿",
-          "北京君正 +6.33亿"
-        ]
+        "leaders": []
       },
       {
         "name": "医药生物",
         "width": 100,
         "value": "+89.14亿",
-        "leaders": [
-          "药明康德 +9.20亿",
-          "恒瑞医药 +9.16亿",
-          "哈药股份 +8.75亿"
-        ]
+        "leaders": []
       },
       {
         "name": "有色金属",
         "width": 100,
         "value": "+69.31亿",
-        "leaders": [
-          "中国稀土 +10.02亿",
-          "紫金矿业 +6.30亿",
-          "中钨高新 +6.09亿"
-        ]
+        "leaders": []
       },
       {
         "name": "数字芯片设计",
         "width": 100,
         "value": "+57.02亿",
-        "leaders": [
-          "兆易创新 +20.00亿",
-          "北京君正 +6.33亿",
-          "佰维存储 +5.58亿"
-        ]
+        "leaders": []
       },
       {
         "name": "机械设备",
         "width": 85,
         "value": "+42.59亿",
-        "leaders": [
-          "芯碁微装 +3.88亿",
-          "英维克 +3.42亿",
-          "合锻智能 +3.24亿"
-        ]
+        "leaders": []
       }
     ],
     "out": [
@@ -146,81 +114,49 @@
         "name": "计算机",
         "width": 100,
         "value": "-66.85亿",
-        "leaders": [
-          "紫光股份 -6.04亿",
-          "海康威视 -4.36亿",
-          "深信服 -3.60亿"
-        ]
+        "leaders": []
       },
       {
         "name": "软件开发",
         "width": 77,
         "value": "-38.67亿",
-        "leaders": [
-          "深信服 -3.60亿",
-          "同花顺 -3.41亿",
-          "金山办公 -2.93亿"
-        ]
+        "leaders": []
       },
       {
         "name": "通信网络设备及器件",
         "width": 63,
         "value": "-31.62亿",
-        "leaders": [
-          "中际旭创 -56.44亿",
-          "新易盛 -10.70亿",
-          "中兴通讯 -5.35亿"
-        ]
+        "leaders": []
       },
       {
         "name": "通信",
         "width": 63,
         "value": "-31.38亿",
-        "leaders": [
-          "中际旭创 -56.44亿",
-          "新易盛 -10.70亿",
-          "中兴通讯 -5.35亿"
-        ]
+        "leaders": []
       },
       {
         "name": "横向通用软件",
         "width": 45,
         "value": "-22.50亿",
-        "leaders": [
-          "深信服 -3.60亿",
-          "金山办公 -2.93亿",
-          "泛微网络 -2.75亿"
-        ]
+        "leaders": []
       },
       {
         "name": "通信设备",
         "width": 44,
         "value": "-22.11亿",
-        "leaders": [
-          "中际旭创 -56.44亿",
-          "新易盛 -10.70亿",
-          "中兴通讯 -5.35亿"
-        ]
+        "leaders": []
       },
       {
         "name": "IT服务Ⅱ",
         "width": 44,
         "value": "-21.97亿",
-        "leaders": [
-          "紫光股份 -6.04亿",
-          "华胜天成 -1.65亿",
-          "汉得信息 -1.64亿"
-        ]
+        "leaders": []
       },
       {
         "name": "IT服务Ⅲ",
         "width": 44,
         "value": "-21.97亿",
-        "leaders": [
-          "紫光股份 -6.04亿",
-          "华胜天成 -1.65亿",
-          "汉得信息 -1.64亿"
-        ]
+        "leaders": []
       }
     ]
   },
@@ -333,53 +269,53 @@
   },
   "influencers": [
     {
-      "avatar": "M",
-      "name": "Elon Musk",
+      "avatar": "马",
+      "name": "马斯克",
       "handle": "@elonmusk",
       "url": "https://x.com/elonmusk",
-      "summary": "Overseas account watch slot. Connect an authorized source before using live posts."
+      "summary": "最新动态：谈及机器人出租车扩张节奏，已翻译并提取关键词。"
     },
     {
-      "avatar": "N",
-      "name": "NVIDIA",
+      "avatar": "黄",
+      "name": "黄仁勋 / NVIDIA",
       "handle": "@nvidia",
       "url": "https://x.com/nvidia",
-      "summary": "AI hardware and inference cost watch slot."
+      "summary": "最新动态：强调端侧 AI 和推理成本下降，关联 AI PC、芯片链。"
     },
     {
       "avatar": "S",
       "name": "sszcw",
       "handle": "@sszcw",
       "url": "https://x.com/sszcw",
-      "summary": "Intraday opinion watch slot."
+      "summary": "盘中观点触发关键词提醒后进入复核队列。"
     },
     {
       "avatar": "V",
       "name": "Valen",
       "handle": "@Valen9223",
       "url": "https://x.com/Valen9223",
-      "summary": "Theme and stock mention watch slot."
+      "summary": "重点监控盘中观点、主题发酵和个股提及。"
     },
     {
       "avatar": "Y",
       "name": "iYXwivACYC88764",
       "handle": "@iYXwivACYC88764",
       "url": "https://x.com/iYXwivACYC88764",
-      "summary": "Keyword watch slot."
+      "summary": "发现关键词后进入待复核队列。"
     },
     {
       "avatar": "P",
       "name": "PandaTouZi",
       "handle": "@PandaTouZi",
       "url": "https://x.com/PandaTouZi",
-      "summary": "China concept and cross-market watch slot."
+      "summary": "关注中概、A股映射和跨市场异动。"
     },
     {
       "avatar": "B",
       "name": "bbloveu7777",
       "handle": "@bbloveu7777",
       "url": "https://x.com/bbloveu7777",
-      "summary": "Short-term sentiment watch slot."
+      "summary": "高频捕捉情绪变化和短线线索。"
     }
   ],
   "details": {
