@@ -1,10 +1,12 @@
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const EASTMONEY_UT = "bd1d9ddb04089700cf9c27f6f7426281";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUTPUT = path.join(ROOT, "data.json");
+const REQUEST_TIMEOUT_MS = 15000;
+const RETRY_COUNT = 3;
 
 const STATIC_INFLUENCERS = [
   { avatar: "马", name: "马斯克", handle: "@elonmusk", url: "https://x.com/elonmusk", summary: "最新动态：谈及机器人出租车扩张节奏，已翻译并提取关键词。" },
@@ -17,16 +19,38 @@ const STATIC_INFLUENCERS = [
 ];
 
 async function main() {
-  const data = await buildDashboardData();
+  let data;
+  try {
+    data = await buildDashboardData();
+  } catch (error) {
+    console.error(`Live data refresh failed: ${errorMessage(error)}`);
+    data = await buildFallbackData(error);
+  }
+
   await writeFile(OUTPUT, `${JSON.stringify(data, null, 2)}\n`, "utf8");
-  console.log(`Updated ${path.relative(ROOT, OUTPUT)}`);
+  console.log(`Updated ${path.relative(ROOT, OUTPUT)} at ${data.updatedAt}`);
+}
+
+async function buildFallbackData(error) {
+  const previous = JSON.parse(await readFile(OUTPUT, "utf8"));
+  return {
+    ...previous,
+    source: "github-actions-eastmoney-error",
+    updatedAt: formatShanghaiTime(new Date()),
+    refreshError: errorMessage(error),
+    status: {
+      ...(previous.status || {}),
+      mode: "数据源重试中",
+      alertEnabled: false
+    }
+  };
 }
 
 async function buildDashboardData() {
   const [stocksRaw, sectorsInRaw, sectorsOutRaw] = await Promise.all([
-    fetchEastmoney(stockListUrl("f62", 8, true)),
-    fetchEastmoney(sectorListUrl("f62", 8, true)),
-    fetchEastmoney(sectorListUrl("f62", 8, false))
+    fetchEastmoney(stockListUrl("f62", 8, true), "stocks inflow"),
+    fetchEastmoney(sectorListUrl("f62", 8, true), "sectors inflow"),
+    fetchEastmoney(sectorListUrl("f62", 8, false), "sectors outflow")
   ]);
 
   const stocks = rows(stocksRaw).map((item) => [item.f14, item.f62 || 0, formatPercent(item.f3)]);
@@ -34,14 +58,7 @@ async function buildDashboardData() {
   const sectorsOut = rows(sectorsOutRaw).map(fundRow);
   const sectors = rows(sectorsInRaw).map((item) => [item.f14, Math.round(Math.abs(item.f62 || 0) / 100000000), formatPercent(item.f3)]);
 
-  const now = new Date();
-  const updatedAt = new Intl.DateTimeFormat("zh-CN", {
-    timeZone: "Asia/Shanghai",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
-  }).format(now);
+  const updatedAt = formatShanghaiTime(new Date());
 
   const topSector = sectorsIn[0];
   const topStock = rows(stocksRaw)[0];
@@ -153,15 +170,41 @@ function fundRow(item) {
   };
 }
 
-async function fetchEastmoney(url) {
-  const response = await fetch(url, {
-    headers: {
-      Accept: "application/json,text/plain,*/*",
-      Referer: "https://quote.eastmoney.com/"
+async function fetchEastmoney(url, label) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= RETRY_COUNT; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal,
+        headers: {
+          Accept: "application/json,text/plain,*/*",
+          Referer: "https://quote.eastmoney.com/",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126 Safari/537.36"
+        }
+      });
+
+      if (!response.ok) throw new Error(`Eastmoney HTTP ${response.status}`);
+
+      const text = await response.text();
+      const payload = JSON.parse(text);
+      if (payload?.rc !== 0 || !Array.isArray(payload?.data?.diff)) {
+        throw new Error(`Eastmoney payload missing rows for ${label}: rc=${payload?.rc}`);
+      }
+      return payload;
+    } catch (error) {
+      lastError = error;
+      console.warn(`[${label}] attempt ${attempt}/${RETRY_COUNT} failed: ${errorMessage(error)}`);
+      if (attempt < RETRY_COUNT) await sleep(1000 * attempt);
+    } finally {
+      clearTimeout(timeout);
     }
-  });
-  if (!response.ok) throw new Error(`Eastmoney HTTP ${response.status}`);
-  return response.json();
+  }
+
+  throw new Error(`Failed to fetch ${label}: ${errorMessage(lastError)}`);
 }
 
 function stockListUrl(fid, size, descending) {
@@ -193,6 +236,16 @@ function rows(payload) {
   return payload?.data?.diff || [];
 }
 
+function formatShanghaiTime(date) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  }).format(date);
+}
+
 function formatPercent(value) {
   const number = Number(value);
   if (!Number.isFinite(number)) return "--";
@@ -204,6 +257,18 @@ function formatMoney(value) {
   if (!Number.isFinite(number)) return "--";
   const yi = number / 100000000;
   return `${yi > 0 ? "+" : ""}${yi.toFixed(2)}亿`;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function errorMessage(error) {
+  const cause = error?.cause;
+  if (cause?.code || cause?.message) {
+    return `${error.message}; cause=${cause.code || ""} ${cause.message || ""}`.trim();
+  }
+  return error?.message || "unknown error";
 }
 
 await main();
