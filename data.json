@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney",
-  "updatedAt": "17:42:12",
+  "source": "github-actions-eastmoney-error",
+  "updatedAt": "20:06:15",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,10 +8,10 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "A股盘中监控",
+    "mode": "数据源重试中",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": true
+    "alertEnabled": false
   },
   "news": [
     {
@@ -419,5 +419,6 @@
       "有色金属当前资金变化约 -10.50亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  }
+  },
+  "refreshError": "Failed to fetch stocks inflow: Eastmoney HTTP 502"
 }
