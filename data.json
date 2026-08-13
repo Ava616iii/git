@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney",
-  "updatedAt": "20:10:43",
+  "source": "github-actions-eastmoney-error",
+  "updatedAt": "23:37:41",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,10 +8,10 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "A股盘中监控",
+    "mode": "数据源重试中",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": true
+    "alertEnabled": false
   },
   "news": [
     {
@@ -419,5 +419,6 @@
       "小金属当前资金变化约 -43.83亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  }
+  },
+  "refreshError": "Failed to fetch sectors inflow: fetch failed; cause=UND_ERR_SOCKET other side closed"
 }
