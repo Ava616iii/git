@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney-error",
-  "updatedAt": "21:44:19",
+  "source": "github-actions-eastmoney",
+  "updatedAt": "22:47:14",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,14 +8,14 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "数据源重试中",
+    "mode": "A股盘中监控",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": false
+    "alertEnabled": true
   },
   "news": [
     {
-      "time": "19:40",
+      "time": "22:47",
       "source": "A股",
       "title": "通信资金净流入居前",
       "summary": "通信当前主力净流入约 +139.07亿，页面数据来自东方财富公开行情接口。",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "time": "19:40",
+      "time": "22:47",
       "source": "A股",
       "title": "亨通光电主力资金排名靠前",
       "summary": "亨通光电进入当前资金净流入靠前列表，涨跌幅 +10.01%。",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "time": "19:40",
+      "time": "22:47",
       "source": "A股",
       "title": "电子资金净流出靠前",
       "summary": "电子当前主力净流出约 -64.70亿，可结合个股和板块榜单观察。",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "time": "19:40",
+      "time": "22:47",
       "source": "海外",
       "title": "海外与大V位保留为后续扩展",
       "summary": "X、雪球和付费讯源需要授权或额外接口；当前自动刷新先覆盖 A 股公开数据。",
@@ -419,6 +419,5 @@
       "证券Ⅱ当前资金变化约 -30.65亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  },
-  "refreshError": "Failed to fetch stocks inflow: Eastmoney HTTP 502"
+  }
 }
