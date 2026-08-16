@@ -1,5 +1,6 @@
 const EASTMONEY_UT = "bd1d9ddb04089700cf9c27f6f7426281";
 const CACHE_TTL_SECONDS = 60;
+const LEADER_COUNT = 3;
 
 const STATIC_INFLUENCERS = [
   { avatar: "马", name: "马斯克", handle: "@elonmusk", url: "https://x.com/elonmusk", summary: "等待接入 X API；当前保留账号入口和关键词提醒位。" },
@@ -56,10 +57,15 @@ async function buildDashboardData() {
     fetchEastmoney(sectorListUrl("f62", 8, false))
   ]);
 
-  const stocks = rows(stocksRaw).map(item => [item.f14, item.f62 || 0, formatPercent(item.f3)]);
-  const sectorsIn = rows(sectorsInRaw).map(item => fundRow(item, "+"));
-  const sectorsOut = rows(sectorsOutRaw).map(item => fundRow(item, "-"));
-  const sectors = rows(sectorsInRaw).map(item => [item.f14, Math.round(Math.abs(item.f62 || 0) / 100000000), formatPercent(item.f3)]);
+  const stockRows = rows(stocksRaw);
+  const sectorInRows = rows(sectorsInRaw);
+  const sectorOutRows = rows(sectorsOutRaw);
+  const stocks = stockRows.map(item => [item.f14, item.f62 || 0, formatPercent(item.f3)]);
+  const [sectorsIn, sectorsOut] = await Promise.all([
+    buildSectorFundRows(sectorInRows, true),
+    buildSectorFundRows(sectorOutRows, false)
+  ]);
+  const sectors = sectorInRows.map(item => [item.f14, Math.round(Math.abs(item.f62 || 0) / 100000000), formatPercent(item.f3)]);
   const now = new Date();
   const updatedAt = new Intl.DateTimeFormat("zh-CN", {
     timeZone: "Asia/Shanghai",
@@ -70,7 +76,7 @@ async function buildDashboardData() {
   }).format(now);
 
   const topSector = sectorsIn[0];
-  const topStock = rows(stocksRaw)[0];
+  const topStock = stockRows[0];
   const topOutSector = sectorsOut[0];
 
   return {
@@ -107,7 +113,7 @@ async function buildDashboardData() {
       ]
     },
     influencers: STATIC_INFLUENCERS,
-    details: buildDetails(rows(stocksRaw), sectorsIn, sectorsOut)
+    details: buildDetails(stockRows, sectorsIn, sectorsOut)
   };
 }
 
@@ -170,12 +176,33 @@ function buildDetails(stockRows, sectorsIn, sectorsOut) {
   return details;
 }
 
-function fundRow(item) {
+async function buildSectorFundRows(items, descending) {
+  return Promise.all(items.map(async item => {
+    const leaders = await fetchSectorLeaders(item.f12, descending);
+    return fundRow(item, leaders);
+  }));
+}
+
+async function fetchSectorLeaders(sectorCode, descending) {
+  if (!sectorCode) return [];
+
+  try {
+    const payload = await fetchEastmoney(
+      sectorStockListUrl(sectorCode, LEADER_COUNT, descending)
+    );
+    return rows(payload).map(item => `${item.f14} ${formatMoney(item.f62)}`);
+  } catch (error) {
+    console.warn(`[sector ${sectorCode} leaders] skipped: ${error.message}`);
+    return [];
+  }
+}
+
+function fundRow(item, leaders = []) {
   return {
     name: item.f14,
     width: Math.max(12, Math.min(100, Math.round(Math.abs(item.f62 || 0) / 50000000))),
     value: formatMoney(item.f62),
-    leaders: []
+    leaders
   };
 }
 
@@ -197,6 +224,10 @@ function stockListUrl(fid, size, descending) {
 
 function sectorListUrl(fid, size, descending) {
   return eastmoneyUrl({ fs: "m:90+t:2", fid, size, descending });
+}
+
+function sectorStockListUrl(sectorCode, size, descending) {
+  return eastmoneyUrl({ fs: `b:${sectorCode}`, fid: "f62", size, descending });
 }
 
 function eastmoneyUrl({ fs, fid, size, descending }) {
