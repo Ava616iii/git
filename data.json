@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney-error",
-  "updatedAt": "05:45:49",
+  "source": "github-actions-eastmoney",
+  "updatedAt": "06:54:17",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,14 +8,14 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "数据源重试中",
+    "mode": "A股盘中监控",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": false
+    "alertEnabled": true
   },
   "news": [
     {
-      "time": "03:36",
+      "time": "06:54",
       "source": "A股",
       "title": "农林牧渔资金净流入居前",
       "summary": "农林牧渔当前主力净流入约 +36.34亿，页面数据来自东方财富公开行情接口。",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "time": "03:36",
+      "time": "06:54",
       "source": "A股",
       "title": "京东方Ａ主力资金排名靠前",
       "summary": "京东方Ａ进入当前资金净流入靠前列表，涨跌幅 +6.41%。",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "time": "03:36",
+      "time": "06:54",
       "source": "A股",
       "title": "电子资金净流出靠前",
       "summary": "电子当前主力净流出约 -228.02亿，可结合个股和板块榜单观察。",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "time": "03:36",
+      "time": "06:54",
       "source": "海外",
       "title": "海外与大V位保留为后续扩展",
       "summary": "X、雪球和付费讯源需要授权或额外接口；当前自动刷新先覆盖 A 股公开数据。",
@@ -483,6 +483,5 @@
       "数字芯片设计当前资金变化约 -75.14亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  },
-  "refreshError": "Failed to fetch sectors inflow: Eastmoney HTTP 502"
+  }
 }
