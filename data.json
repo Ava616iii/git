@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney-error",
-  "updatedAt": "03:19:02",
+  "source": "github-actions-eastmoney",
+  "updatedAt": "04:55:52",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,14 +8,14 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "数据源重试中",
+    "mode": "A股盘中监控",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": false
+    "alertEnabled": true
   },
   "news": [
     {
-      "time": "01:16",
+      "time": "04:55",
       "source": "A股",
       "title": "医药生物资金净流入居前",
       "summary": "医药生物当前主力净流入约 +109.16亿，页面数据来自东方财富公开行情接口。",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "time": "01:16",
+      "time": "04:55",
       "source": "A股",
       "title": "紫金矿业主力资金排名靠前",
       "summary": "紫金矿业进入当前资金净流入靠前列表，涨跌幅 +4.55%。",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "time": "01:16",
+      "time": "04:55",
       "source": "A股",
       "title": "电子资金净流出靠前",
       "summary": "电子当前主力净流出约 -120.12亿，可结合个股和板块榜单观察。",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "time": "01:16",
+      "time": "04:55",
       "source": "海外",
       "title": "海外与大V位保留为后续扩展",
       "summary": "X、雪球和付费讯源需要授权或额外接口；当前自动刷新先覆盖 A 股公开数据。",
@@ -104,21 +104,13 @@
         "name": "化学制药",
         "width": 59,
         "value": "+29.42亿",
-        "leaders": [
-          "誉衡药业 +5.08亿",
-          "石药创新 +3.10亿",
-          "百济神州 +2.28亿"
-        ]
+        "leaders": []
       },
       {
         "name": "医疗研发外包",
         "width": 58,
         "value": "+29.19亿",
-        "leaders": [
-          "凯莱英 +7.82亿",
-          "药明康德 +7.05亿",
-          "博腾股份 +2.77亿"
-        ]
+        "leaders": []
       },
       {
         "name": "有色金属",
@@ -146,13 +138,21 @@
         "name": "电子",
         "width": 100,
         "value": "-120.12亿",
-        "leaders": []
+        "leaders": [
+          "风华高科 -12.72亿",
+          "海光信息 -9.11亿",
+          "长鑫科技 -8.49亿"
+        ]
       },
       {
         "name": "半导体",
         "width": 100,
         "value": "-74.81亿",
-        "leaders": []
+        "leaders": [
+          "海光信息 -9.11亿",
+          "长鑫科技 -8.49亿",
+          "芯原股份 -4.85亿"
+        ]
       },
       {
         "name": "电力设备",
@@ -190,7 +190,11 @@
         "name": "被动元件",
         "width": 39,
         "value": "-19.28亿",
-        "leaders": []
+        "leaders": [
+          "风华高科 -12.72亿",
+          "三环集团 -2.34亿",
+          "江海股份 -2.21亿"
+        ]
       },
       {
         "name": "机械设备",
@@ -459,6 +463,5 @@
       "机械设备当前资金变化约 -18.59亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  },
-  "refreshError": "Failed to fetch sectors outflow: Eastmoney HTTP 502"
+  }
 }
