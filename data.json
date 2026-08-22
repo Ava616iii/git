@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney-error",
-  "updatedAt": "03:50:41",
+  "source": "github-actions-eastmoney",
+  "updatedAt": "04:53:12",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,14 +8,14 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "数据源重试中",
+    "mode": "A股盘中监控",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": false
+    "alertEnabled": true
   },
   "news": [
     {
-      "time": "01:44",
+      "time": "04:53",
       "source": "A股",
       "title": "有色金属资金净流入居前",
       "summary": "有色金属当前主力净流入约 +88.29亿，页面数据来自东方财富公开行情接口。",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "time": "01:44",
+      "time": "04:53",
       "source": "A股",
       "title": "中际旭创主力资金排名靠前",
       "summary": "中际旭创进入当前资金净流入靠前列表，涨跌幅 +4.29%。",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "time": "01:44",
+      "time": "04:53",
       "source": "A股",
       "title": "医药生物资金净流出靠前",
       "summary": "医药生物当前主力净流出约 -91.11亿，可结合个股和板块榜单观察。",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "time": "01:44",
+      "time": "04:53",
       "source": "海外",
       "title": "海外与大V位保留为后续扩展",
       "summary": "X、雪球和付费讯源需要授权或额外接口；当前自动刷新先覆盖 A 股公开数据。",
@@ -64,11 +64,7 @@
         "name": "有色金属",
         "width": 100,
         "value": "+88.29亿",
-        "leaders": [
-          "湖南白银 +10.56亿",
-          "XD紫金矿 +8.89亿",
-          "白银有色 +7.07亿"
-        ]
+        "leaders": []
       },
       {
         "name": "电子",
@@ -216,11 +212,7 @@
         "name": "传媒",
         "width": 24,
         "value": "-12.02亿",
-        "leaders": [
-          "昆仑万维 -2.32亿",
-          "易点天下 -2.27亿",
-          "吉比特 -1.17亿"
-        ]
+        "leaders": []
       }
     ]
   },
@@ -483,6 +475,5 @@
       "传媒当前资金变化约 -12.02亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  },
-  "refreshError": "Failed to fetch sectors inflow: Eastmoney HTTP 502"
+  }
 }
