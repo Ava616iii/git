@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney-error",
-  "updatedAt": "06:00:05",
+  "source": "github-actions-eastmoney",
+  "updatedAt": "07:00:46",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,14 +8,14 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "数据源重试中",
+    "mode": "A股盘中监控",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": false
+    "alertEnabled": true
   },
   "news": [
     {
-      "time": "05:00",
+      "time": "07:00",
       "source": "A股",
       "title": "工业金属资金净流入居前",
       "summary": "工业金属当前主力净流入约 +10.02亿，页面数据来自东方财富公开行情接口。",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "time": "05:00",
+      "time": "07:00",
       "source": "A股",
       "title": "圣阳股份主力资金排名靠前",
       "summary": "圣阳股份进入当前资金净流入靠前列表，涨跌幅 +9.98%。",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "time": "05:00",
+      "time": "07:00",
       "source": "A股",
       "title": "电子资金净流出靠前",
       "summary": "电子当前主力净流出约 -361.17亿，可结合个股和板块榜单观察。",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "time": "05:00",
+      "time": "07:00",
       "source": "海外",
       "title": "海外与大V位保留为后续扩展",
       "summary": "X、雪球和付费讯源需要授权或额外接口；当前自动刷新先覆盖 A 股公开数据。",
@@ -483,6 +483,5 @@
       "医药生物当前资金变化约 -70.87亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  },
-  "refreshError": "Failed to fetch sectors outflow: Eastmoney HTTP 502"
+  }
 }
