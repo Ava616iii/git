@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney-error",
-  "updatedAt": "04:59:03",
+  "source": "github-actions-eastmoney",
+  "updatedAt": "05:58:09",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,14 +8,14 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "数据源重试中",
+    "mode": "A股盘中监控",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": false
+    "alertEnabled": true
   },
   "news": [
     {
-      "time": "00:20",
+      "time": "05:58",
       "source": "A股",
       "title": "机械设备资金净流入居前",
       "summary": "机械设备当前主力净流入约 +66.07亿，页面数据来自东方财富公开行情接口。",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "time": "00:20",
+      "time": "05:58",
       "source": "A股",
       "title": "N高凯主力资金排名靠前",
       "summary": "N高凯进入当前资金净流入靠前列表，涨跌幅 +282.99%。",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "time": "00:20",
+      "time": "05:58",
       "source": "A股",
       "title": "有色金属资金净流出靠前",
       "summary": "有色金属当前主力净流出约 -57.29亿，可结合个股和板块榜单观察。",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "time": "00:20",
+      "time": "05:58",
       "source": "海外",
       "title": "海外与大V位保留为后续扩展",
       "summary": "X、雪球和付费讯源需要授权或额外接口；当前自动刷新先覆盖 A 股公开数据。",
@@ -104,11 +104,7 @@
         "name": "医药生物",
         "width": 73,
         "value": "+36.71亿",
-        "leaders": [
-          "药明康德 +5.39亿",
-          "誉衡药业 +4.25亿",
-          "凯莱英 +3.37亿"
-        ]
+        "leaders": []
       },
       {
         "name": "通信设备",
@@ -146,7 +142,11 @@
         "name": "有色金属",
         "width": 100,
         "value": "-57.29亿",
-        "leaders": []
+        "leaders": [
+          "洛阳钼业 -5.54亿",
+          "云南锗业 -3.99亿",
+          "华友钴业 -2.44亿"
+        ]
       },
       {
         "name": "电力设备",
@@ -212,11 +212,7 @@
         "name": "铜",
         "width": 30,
         "value": "-14.80亿",
-        "leaders": [
-          "洛阳钼业 -5.54亿",
-          "铜陵有色 -1.85亿",
-          "白银有色 -1.52亿"
-        ]
+        "leaders": []
       }
     ]
   },
@@ -479,6 +475,5 @@
       "铜当前资金变化约 -14.80亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  },
-  "refreshError": "Failed to fetch stocks inflow: Eastmoney HTTP 502"
+  }
 }
