@@ -1,6 +1,6 @@
 {
   "source": "github-actions-eastmoney-error",
-  "updatedAt": "06:19:05",
+  "updatedAt": "06:32:05",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -436,5 +436,5 @@
       "可继续与个股榜单交叉观察。"
     ]
   },
-  "refreshError": "Failed to fetch sectors inflow: fetch failed; cause=UND_ERR_SOCKET other side closed"
+  "refreshError": "Failed to fetch sectors inflow: Eastmoney HTTP 502"
 }
