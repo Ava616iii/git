@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney-error",
-  "updatedAt": "21:09:10",
+  "source": "github-actions-eastmoney",
+  "updatedAt": "21:22:21",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,14 +8,14 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "数据源重试中",
+    "mode": "A股盘中监控",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": false
+    "alertEnabled": true
   },
   "news": [
     {
-      "time": "20:56",
+      "time": "21:22",
       "source": "A股",
       "title": "基础化工资金净流入居前",
       "summary": "基础化工当前主力净流入约 +26.78亿，页面数据来自东方财富公开行情接口。",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "time": "20:56",
+      "time": "21:22",
       "source": "A股",
       "title": "星网锐捷主力资金排名靠前",
       "summary": "星网锐捷进入当前资金净流入靠前列表，涨跌幅 +10.01%。",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "time": "20:56",
+      "time": "21:22",
       "source": "A股",
       "title": "电子资金净流出靠前",
       "summary": "电子当前主力净流出约 -186.85亿，可结合个股和板块榜单观察。",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "time": "20:56",
+      "time": "21:22",
       "source": "海外",
       "title": "海外与大V位保留为后续扩展",
       "summary": "X、雪球和付费讯源需要授权或额外接口；当前自动刷新先覆盖 A 股公开数据。",
@@ -483,6 +483,5 @@
       "医药生物当前资金变化约 -34.03亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  },
-  "refreshError": "Failed to fetch sectors inflow: Eastmoney HTTP 502"
+  }
 }
