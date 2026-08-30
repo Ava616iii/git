@@ -1,6 +1,6 @@
 {
   "source": "github-actions-eastmoney-error",
-  "updatedAt": "04:19:06",
+  "updatedAt": "04:32:10",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -460,5 +460,5 @@
       "可继续与个股榜单交叉观察。"
     ]
   },
-  "refreshError": "Failed to fetch sectors inflow: Eastmoney HTTP 502"
+  "refreshError": "Failed to fetch stocks inflow: Eastmoney HTTP 502"
 }
