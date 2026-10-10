@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney",
-  "updatedAt": "16:55:05",
+  "source": "github-actions-eastmoney-error",
+  "updatedAt": "23:09:12",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,10 +8,10 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "A股盘中监控",
+    "mode": "数据源重试中",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": true
+    "alertEnabled": false
   },
   "news": [
     {
@@ -459,5 +459,6 @@
       "通信网络设备及器件当前资金变化约 -27.52亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  }
+  },
+  "refreshError": "Failed to fetch sectors outflow: Eastmoney HTTP 502"
 }
