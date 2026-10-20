@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney-error",
-  "updatedAt": "23:10:38",
+  "source": "github-actions-eastmoney",
+  "updatedAt": "03:19:08",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,14 +8,14 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "数据源重试中",
+    "mode": "A股盘中监控",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": false
+    "alertEnabled": true
   },
   "news": [
     {
-      "time": "18:13",
+      "time": "03:19",
       "source": "A股",
       "title": "消费电子资金净流入居前",
       "summary": "消费电子当前主力净流入约 +28.82亿，页面数据来自东方财富公开行情接口。",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "time": "18:13",
+      "time": "03:19",
       "source": "A股",
       "title": "长盈精密主力资金排名靠前",
       "summary": "长盈精密进入当前资金净流入靠前列表，涨跌幅 +19.99%。",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "time": "18:13",
+      "time": "03:19",
       "source": "A股",
       "title": "电力设备资金净流出靠前",
       "summary": "电力设备当前主力净流出约 -39.12亿，可结合个股和板块榜单观察。",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "time": "18:13",
+      "time": "03:19",
       "source": "海外",
       "title": "海外与大V位保留为后续扩展",
       "summary": "X、雪球和付费讯源需要授权或额外接口；当前自动刷新先覆盖 A 股公开数据。",
@@ -94,7 +94,11 @@
         "name": "自动化设备",
         "width": 29,
         "value": "+14.32亿",
-        "leaders": []
+        "leaders": [
+          "绿的谐波 +3.70亿",
+          "大族激光 +1.72亿",
+          "中控技术 +1.55亿"
+        ]
       },
       {
         "name": "电子",
@@ -192,7 +196,11 @@
         "name": "铜",
         "width": 43,
         "value": "-21.61亿",
-        "leaders": []
+        "leaders": [
+          "洛阳钼业 -10.89亿",
+          "紫金矿业 -5.32亿",
+          "江西铜业 -1.75亿"
+        ]
       },
       {
         "name": "证券Ⅱ",
@@ -475,6 +483,5 @@
       "证券Ⅲ当前资金变化约 -21.31亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  },
-  "refreshError": "Failed to fetch stocks inflow: Eastmoney HTTP 502"
+  }
 }
