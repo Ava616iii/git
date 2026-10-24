@@ -1,6 +1,6 @@
 {
-  "source": "github-actions-eastmoney",
-  "updatedAt": "19:37:07",
+  "source": "github-actions-eastmoney-error",
+  "updatedAt": "22:53:56",
   "overview": {
     "news": "24",
     "stocks": "8",
@@ -8,10 +8,10 @@
     "alerts": "16"
   },
   "status": {
-    "mode": "A股盘中监控",
+    "mode": "数据源重试中",
     "aShareAlerts": 16,
     "overseasAlerts": 0,
-    "alertEnabled": true
+    "alertEnabled": false
   },
   "news": [
     {
@@ -483,5 +483,6 @@
       "国有大型银行Ⅲ当前资金变化约 -14.61亿。",
       "可继续与个股榜单交叉观察。"
     ]
-  }
+  },
+  "refreshError": "Failed to fetch sectors outflow: Eastmoney HTTP 502"
 }
